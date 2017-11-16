@@ -5,6 +5,7 @@
         <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
         <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm">
       </video>
+      <button @click="loadSource()">change source</button>
     </main>
   </div>
 </template>
@@ -15,6 +16,7 @@
   import Component from 'vue-class-component'
   import SystemInformation from './LandingPage/SystemInformation'
   import VideoJs from 'video.js'
+  import { remote } from 'electron'
   @Component({
     components: {
       'system-information': SystemInformation
@@ -32,12 +34,19 @@
     }
 
     mounted () {
+      console.log(remote.app.getPath('desktop'))
       this.player = VideoJs('my-player', this.optionsPlayer)
-      console.log(this.player.isFullscreen(true))
+      this.player.isFullscreen(true)
     }
     // Open link in external browser
     open (link) {
       this.$electron.shell.openExternal(link)
+    }
+
+    // Load source in Video Player
+    loadSource (source) {
+      // this.player.src = remote.app.getPath('desktop') + '/videodesk/Waves.mp4'
+      console.log(this.player.src('file:///Users/williamgarrido/Desktop/videodesk/Waves.mp4'))
     }
   }
 </script>
