@@ -46,7 +46,7 @@ app.on('ready', () => {
   const contextMenu = Menu.buildFromTemplate([
     {label: 'quit', type: 'normal', role: 'quit'}
   ])
-  tray.setToolTip('videoDesk')
+  tray.setToolTip('VideoDesk')
   tray.setContextMenu(contextMenu)
   createWindow(width, height)
 })
