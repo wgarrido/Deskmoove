@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, screen, Tray, Menu } from 'electron'
+import { app, BrowserWindow, screen, Tray, Menu, dialog } from 'electron'
 import path from 'path'
 /**
  * Set `__static` path to static files in production
@@ -44,6 +44,16 @@ app.on('ready', () => {
   let iconPath = path.join(__dirname, '../img/icon.png')
   tray = new Tray(iconPath)
   const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'load',
+      type: 'normal',
+      click: () => {
+        dialog.showOpenDialog({properties: ['openFile']}, (path) => {
+          // Send message on change-src channel
+          mainWindow.webContents.send('change-src', path)
+        })
+      }
+    },
     {label: 'quit', type: 'normal', role: 'quit'}
   ])
   tray.setToolTip('VideoDesk')

@@ -15,7 +15,7 @@
   import Component from 'vue-class-component'
   import SystemInformation from './LandingPage/SystemInformation'
   import VideoJs from 'video.js'
-  // import { remote } from 'electron'
+  import { ipcRenderer } from 'electron'
   @Component({
     components: {
       'system-information': SystemInformation
@@ -35,6 +35,11 @@
     mounted () {
       this.player = VideoJs('my-player', this.optionsPlayer)
       this.player.isFullscreen(true)
+
+      // Listen Channel change-src on Main
+      ipcRenderer.on('change-src', (event, arg) => {
+        this.loadSource(arg[0])
+      })
     }
     // Open link in external browser
     open (link) {
@@ -43,8 +48,7 @@
 
     // Load source in Video Player
     loadSource (source) {
-      // this.player.src = remote.app.getPath('desktop') + '/videodesk/Waves.mp4'
-      console.log(this.player.src('file:///Users/williamgarrido/Desktop/videodesk/Waves.mp4'))
+      this.player.src('file://' + source)
     }
   }
 </script>
