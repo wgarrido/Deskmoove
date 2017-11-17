@@ -32,6 +32,7 @@ function createWindow (width, height) {
   })
 
   mainWindow.loadURL(winURL)
+  mainWindow.closeDevTools()
 
   mainWindow.on('closed', () => {
     mainWindow = null
