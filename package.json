@@ -1,9 +1,9 @@
 {
   "name": "videodesk",
   "productName": "videodesk",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "William Garrido <will.bypass@gmail.com>",
-  "description": "video wallpaper for Win/Osx",
+  "description": "Video wallpaper for OSX",
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
