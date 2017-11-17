@@ -21,14 +21,12 @@ function createWindow (width, height) {
    */
   mainWindow = new BrowserWindow({
     height,
-    useContentSize: true,
     width,
     frame: false,
     type: 'desktop',
     webPreferences: {
       webSecurity: false
     }
-
   })
 
   mainWindow.loadURL(winURL)
@@ -40,6 +38,7 @@ function createWindow (width, height) {
 }
 
 app.on('ready', () => {
+  console.log(screen.getPrimaryDisplay().size)
   const {width, height} = screen.getPrimaryDisplay().workAreaSize
   let iconPath = path.join(__dirname, '../img/icon.png')
   tray = new Tray(iconPath)
