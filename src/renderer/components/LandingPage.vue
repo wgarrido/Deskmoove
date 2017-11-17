@@ -5,7 +5,6 @@
         <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
         <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm">
       </video>
-      <button @click="loadSource()">change source</button>
     </main>
   </div>
 </template>
@@ -16,7 +15,7 @@
   import Component from 'vue-class-component'
   import SystemInformation from './LandingPage/SystemInformation'
   import VideoJs from 'video.js'
-  import { remote } from 'electron'
+  // import { remote } from 'electron'
   @Component({
     components: {
       'system-information': SystemInformation
@@ -34,7 +33,6 @@
     }
 
     mounted () {
-      console.log(remote.app.getPath('desktop'))
       this.player = VideoJs('my-player', this.optionsPlayer)
       this.player.isFullscreen(true)
     }
@@ -63,5 +61,27 @@
   body { 
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #000;
+  }
+
+  main {
+    position: relative;
+    height: 100vh;
+    z-index: 0;
+  }
+
+  #my-player{
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
   }
 </style>
