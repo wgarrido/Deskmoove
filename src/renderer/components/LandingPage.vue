@@ -13,14 +13,9 @@
   import 'video.js/dist/video-js.min.css'
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import SystemInformation from './LandingPage/SystemInformation'
   import VideoJs from 'video.js'
   import { ipcRenderer } from 'electron'
-  @Component({
-    components: {
-      'system-information': SystemInformation
-    }
-  })
+  @Component
   export default class App extends Vue {
     player = null
     optionsPlayer = {
