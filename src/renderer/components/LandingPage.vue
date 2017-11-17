@@ -65,6 +65,7 @@
   body { 
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #000;
+    overflow: hidden;
   }
 
   main {
