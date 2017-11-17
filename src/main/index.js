@@ -1,7 +1,7 @@
 'use strict'
 
-import { app, BrowserWindow, screen } from 'electron'
-
+import { app, BrowserWindow, screen, Tray, Menu } from 'electron'
+import path from 'path'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -9,7 +9,7 @@ import { app, BrowserWindow, screen } from 'electron'
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
-
+let tray = null
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
@@ -41,6 +41,13 @@ function createWindow (width, height) {
 
 app.on('ready', () => {
   const {width, height} = screen.getPrimaryDisplay().workAreaSize
+  let iconPath = path.join(__dirname, '../img/icon.png')
+  tray = new Tray(iconPath)
+  const contextMenu = Menu.buildFromTemplate([
+    {label: 'quit', type: 'normal', role: 'quit'}
+  ])
+  tray.setToolTip('videoDesk')
+  tray.setContextMenu(contextMenu)
   createWindow(width, height)
 })
 
