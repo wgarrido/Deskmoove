@@ -47,7 +47,10 @@ app.on('ready', () => {
       label: 'load',
       type: 'normal',
       click: () => {
-        dialog.showOpenDialog({properties: ['openFile']}, (path) => {
+        dialog.showOpenDialog({
+          properties: ['openFile'],
+          filters: [{name: 'Movies', extensions: ['mp4']}]
+        }, (path) => {
           // Send message on change-src channel
           mainWindow.webContents.send('change-src', path)
         })
