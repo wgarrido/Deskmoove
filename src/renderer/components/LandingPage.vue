@@ -33,7 +33,7 @@
 
       // Listen Channel change-src on Main
       ipcRenderer.on('change-src', (event, arg) => {
-        this.loadSource(arg[0])
+        this.loadSource(arg[0], arg[1])
       })
     }
     // Open link in external browser
@@ -42,8 +42,10 @@
     }
 
     // Load source in Video Player
-    loadSource (source) {
-      this.player.src('file://' + source)
+    loadSource (source, context) {
+      if (context === 'local') {
+        this.player.src('file://' + source)
+      }
     }
   }
 </script>

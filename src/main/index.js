@@ -53,7 +53,7 @@ app.on('ready', () => {
           filters: [{name: 'Movies', extensions: ['mp4']}]
         }, (path) => {
           // Send message on change-src channel
-          mainWindow.webContents.send('change-src', path)
+          mainWindow.webContents.send('change-src', [path, 'local'])
         })
       }
     },
