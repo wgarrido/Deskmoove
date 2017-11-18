@@ -22,8 +22,10 @@ function createWindow (width, height) {
   mainWindow = new BrowserWindow({
     height,
     width,
-    frame: false,
+    frame: true,
     type: 'desktop',
+    useContentSize: true,
+    enableLargerThanScreen: true,
     webPreferences: {
       webSecurity: false
     }
@@ -31,15 +33,13 @@ function createWindow (width, height) {
 
   mainWindow.loadURL(winURL)
   mainWindow.closeDevTools()
-
   mainWindow.on('closed', () => {
     mainWindow = null
   })
 }
 
 app.on('ready', () => {
-  console.log(screen.getPrimaryDisplay().size)
-  const {width, height} = screen.getPrimaryDisplay().workAreaSize
+  const {width, height} = screen.getPrimaryDisplay().size
   let iconPath = path.join(__dirname, '../img/icon.png')
   tray = new Tray(iconPath)
   const contextMenu = Menu.buildFromTemplate([
