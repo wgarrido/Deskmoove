@@ -1,6 +1,6 @@
 # videodesk
 
-> video wallpaper for Win/Osx
+> video wallpaper for OSX
 
 #### Build Setup
 
