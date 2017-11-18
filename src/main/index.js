@@ -39,6 +39,8 @@ function createWindow (width, height) {
 }
 
 app.on('ready', () => {
+  // hide icon dock
+  app.dock.hide()
   const {width, height} = screen.getPrimaryDisplay().size
   let iconPath = path.join(__dirname, '../img/icon.png')
   tray = new Tray(iconPath)
