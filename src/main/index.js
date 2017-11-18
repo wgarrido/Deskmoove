@@ -16,9 +16,6 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow (width, height) {
-  /**
-   * Initial window options
-   */
   mainWindow = new BrowserWindow({
     height,
     width,
@@ -41,7 +38,9 @@ function createWindow (width, height) {
 app.on('ready', () => {
   // hide icon dock
   app.dock.hide()
+  // get size screen
   const {width, height} = screen.getPrimaryDisplay().size
+  // tray
   let iconPath = path.join(__dirname, '../img/icon.png')
   tray = new Tray(iconPath)
   const contextMenu = Menu.buildFromTemplate([
@@ -62,6 +61,7 @@ app.on('ready', () => {
   ])
   tray.setToolTip('VideoDesk')
   tray.setContextMenu(contextMenu)
+
   createWindow(width, height)
 })
 
