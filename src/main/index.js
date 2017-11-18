@@ -16,14 +16,13 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow (width, height) {
-  /**
-   * Initial window options
-   */
   mainWindow = new BrowserWindow({
     height,
     width,
-    frame: false,
+    frame: true,
     type: 'desktop',
+    useContentSize: true,
+    enableLargerThanScreen: true,
     webPreferences: {
       webSecurity: false
     }
@@ -31,15 +30,17 @@ function createWindow (width, height) {
 
   mainWindow.loadURL(winURL)
   mainWindow.closeDevTools()
-
   mainWindow.on('closed', () => {
     mainWindow = null
   })
 }
 
 app.on('ready', () => {
-  console.log(screen.getPrimaryDisplay().size)
-  const {width, height} = screen.getPrimaryDisplay().workAreaSize
+  // hide icon dock
+  app.dock.hide()
+  // get size screen
+  const {width, height} = screen.getPrimaryDisplay().size
+  // tray
   let iconPath = path.join(__dirname, '../img/icon.png')
   tray = new Tray(iconPath)
   const contextMenu = Menu.buildFromTemplate([
@@ -52,7 +53,7 @@ app.on('ready', () => {
           filters: [{name: 'Movies', extensions: ['mp4']}]
         }, (path) => {
           // Send message on change-src channel
-          mainWindow.webContents.send('change-src', path)
+          mainWindow.webContents.send('change-src', [path, 'local'])
         })
       }
     },
@@ -60,6 +61,7 @@ app.on('ready', () => {
   ])
   tray.setToolTip('VideoDesk')
   tray.setContextMenu(contextMenu)
+
   createWindow(width, height)
 })
 
