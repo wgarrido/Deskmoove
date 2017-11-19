@@ -2,8 +2,8 @@
   <div id="wrapper">
     <main>
       <video id="my-player" class="video-js" preload="auto">
-        <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-        <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm">
+        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+        <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
       </video>
     </main>
   </div>
@@ -11,23 +11,24 @@
 
 <script>
   import 'video.js/dist/video-js.min.css'
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
   import VideoJs from 'video.js'
   import { ipcRenderer } from 'electron'
-  @Component
-  export default class App extends Vue {
-    player = null
-    optionsPlayer = {
-      autoplay: true,
-      controls: false,
-      loop: true,
-      muted: true,
-      preload: 'auto',
-      fluid: true
-    }
 
-    mounted () {
+  export default {
+    data () {
+      return {
+        player: null,
+        optionsPlayer: {
+          autoplay: true,
+          controls: false,
+          loop: true,
+          muted: true,
+          preload: 'auto',
+          fluid: true
+        }
+      }
+    },
+    mounted: function () {
       this.player = VideoJs('my-player', this.optionsPlayer)
       this.player.isFullscreen(true)
 
@@ -35,16 +36,16 @@
       ipcRenderer.on('change-src', (event, arg) => {
         this.loadSource(arg[0], arg[1])
       })
-    }
-    // Open link in external browser
-    open (link) {
-      this.$electron.shell.openExternal(link)
-    }
-
-    // Load source in Video Player
-    loadSource (source, context) {
-      if (context === 'local') {
-        this.player.src('file://' + source)
+    },
+    methods: {
+      open (link) {
+        this.$electron.shell.openExternal(link)
+      },
+      // Load source in Video Player
+      loadSource (source, context) {
+        if (context === 'local') {
+          this.player.src('file://' + source)
+        }
       }
     }
   }
