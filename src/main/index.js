@@ -1,7 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, screen, Tray, Menu, dialog } from 'electron'
-import path from 'path'
+import { app, BrowserWindow, screen, Tray, nativeImage, Menu, dialog } from 'electron'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -37,12 +36,14 @@ function createWindow (width, height) {
 
 app.on('ready', () => {
   // hide icon dock
-  app.dock.hide()
+  // app.dock.hide()
   // get size screen
   const {width, height} = screen.getPrimaryDisplay().size
   // tray
-  let iconPath = path.join(__dirname, '../img/icon.png')
-  tray = new Tray(iconPath)
+  console.log(__static)
+  const nicon = nativeImage.createFromPath(`${__static}/img/icon.png`)
+  tray = new Tray(nicon)
+  console.log(tray)
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'load',
