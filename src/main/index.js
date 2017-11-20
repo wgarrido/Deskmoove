@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, screen, Tray, nativeImage, Menu, dialog } from 'electron'
+import { app, BrowserWindow, screen, Tray, nativeImage } from 'electron'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -10,9 +10,14 @@ if (process.env.NODE_ENV !== 'development') {
 }
 let tray = null
 let mainWindow
+let paramWindow = null
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
+
+const configURL = process.env.NODE_ENV === 'development'
+  ? `http://localhost:9080/#/config`
+  : `file://${__dirname}/index.html#config`
 
 function createWindow (width, height) {
   mainWindow = new BrowserWindow({
@@ -43,8 +48,7 @@ app.on('ready', () => {
   console.log(__static)
   const nicon = nativeImage.createFromPath(`${__static}/img/icon.png`)
   tray = new Tray(nicon)
-  console.log(tray)
-  const contextMenu = Menu.buildFromTemplate([
+  /* const contextMenu = Menu.buildFromTemplate([
     {
       label: 'load',
       type: 'normal',
@@ -59,10 +63,28 @@ app.on('ready', () => {
       }
     },
     {label: 'quit', type: 'normal', role: 'quit'}
-  ])
+  ]) */
   tray.setToolTip('VideoDesk')
-  tray.setContextMenu(contextMenu)
-
+  // tray.setContextMenu(contextMenu)
+  tray.on('click', () => {
+    if (paramWindow === null) {
+      paramWindow = new BrowserWindow({
+        y: screen.getMenuBarHeight(),
+        x: screen.getCursorScreenPoint().x - 200,
+        height: 200,
+        width: 400,
+        frame: false,
+        useContentSize: true,
+        webPreferences: {
+          devTools: false
+        }
+      })
+      paramWindow.loadURL(configURL)
+    } else {
+      paramWindow.destroy()
+      paramWindow = null
+    }
+  })
   createWindow(width, height)
 })
 
