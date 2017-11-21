@@ -65,9 +65,10 @@ app.on('ready', () => {
         }
       })
       paramWindow.loadURL(configURL)
+    } else if (paramWindow.isVisible()) {
+      paramWindow.hide()
     } else {
-      paramWindow.destroy()
-      paramWindow = null
+      paramWindow.show()
     }
   })
   createWindow(width, height)
