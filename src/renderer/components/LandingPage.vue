@@ -1,23 +1,26 @@
 <template>
   <div id="wrapper">
-    <main>
-      <video id="my-player" class="video-js" preload="auto">
-        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-        <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
-      </video>
+    <main v-html="videoPlayer">
     </main>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue'
   import 'video.js/dist/video-js.min.css'
   import VideoJs from 'video.js'
+  import 'videojs-youtube/dist/Youtube.min.js'
   import { ipcRenderer } from 'electron'
 
   export default {
     data () {
       return {
         player: null,
+        videoPlayer: `<video id="my-player" class="video-js" preload="auto" v-if="context === 'local'">
+                        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                      </video>`,
+        context: 'local',
+        setup: '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }',
         optionsPlayer: {
           autoplay: true,
           controls: false,
@@ -30,11 +33,28 @@
     },
     mounted: function () {
       this.player = VideoJs('my-player', this.optionsPlayer)
-      this.player.isFullscreen(true)
 
       // Listen Channel change-src on Main
       ipcRenderer.on('change-src', (event, arg) => {
-        this.loadSource(arg[0], arg[1])
+        this.context = arg[1]
+        if (this.context === 'local') {
+          this.player.dispose()
+          this.videoPlayer = `<video id="my-player" class="video-js" preload="auto" v-if="context === 'local'">
+                                <source src="file://${arg[0]}" type="video/mp4">
+                              </video>`
+          Vue.nextTick(() => {
+            this.player = VideoJs('my-player', this.optionsPlayer)
+          })
+          // this.loadSource(arg[0], arg[1])
+        } else if (this.context === 'external') {
+          this.player.dispose()
+          this.setup = arg[0]
+          this.videoPlayer = `<video id="my-player" class="video-js" preload="auto" data-setup='${this.setup}'>
+                              </video>`
+          Vue.nextTick(() => {
+            this.player = VideoJs('my-player', this.optionsPlayer)
+          })
+        }
       })
     },
     methods: {
