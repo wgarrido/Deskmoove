@@ -55,13 +55,14 @@ app.on('ready', () => {
       paramWindow = new BrowserWindow({
         y: screen.getMenuBarHeight(),
         x: screen.getCursorScreenPoint().x - 200,
+        height: 180,
         width: 400,
         minWidth: 400,
         maxWidth: 400,
         frame: false,
         useContentSize: true,
         webPreferences: {
-          devTools: true
+          devTools: false
         }
       })
       paramWindow.loadURL(configURL)
