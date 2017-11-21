@@ -1,7 +1,6 @@
 <template>
   <div id="container">
     <header class="toolbar toolbar-header">
-      <h1 class="title">Configuration</h1>
       <div class="toolbar-actions">
       <button class="btn btn-default active">
         <span class="icon icon-video"></span>
@@ -33,12 +32,15 @@
   </div>
     <footer class="toolbar toolbar-footer">
       <div class="toolbar-actions">
+        <button class="btn btn-primary">
+          Ok
+        </button>
         <button class="btn btn-default">
           Cancel
         </button>
 
-        <button class="btn btn-primary pull-right">
-          Save
+        <button class="btn btn-negative pull-right" @click="quitApp()">
+          Quit app
         </button>
       </div>
     </footer>
@@ -64,6 +66,9 @@
           ipcRenderer.send('videoSrc', [path, 'local'])
           this.localVideo = path[0].substr(path[0].lastIndexOf('/') + 1)
         })
+      },
+      quitApp () {
+        remote.app.quit()
       }
     }
   }
