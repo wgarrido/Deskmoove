@@ -28,12 +28,12 @@ function createWindow (width, height) {
     useContentSize: true,
     enableLargerThanScreen: true,
     webPreferences: {
-      webSecurity: false
+      webSecurity: false,
+      devTools: false
     }
   })
 
   mainWindow.loadURL(winURL)
-  mainWindow.closeDevTools()
   mainWindow.on('closed', () => {
     mainWindow = null
   })
@@ -56,6 +56,7 @@ app.on('ready', () => {
         y: screen.getMenuBarHeight(),
         x: screen.getCursorScreenPoint().x - 200,
         height: 180,
+        maxHeight: 400,
         width: 400,
         minWidth: 400,
         maxWidth: 400,

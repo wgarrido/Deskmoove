@@ -23,12 +23,13 @@
         </label>
       </div>
       <div v-if="videoConfig === 'local'">
-        <button class="btn btn-large btn-default" @click="loadVideoFile()">Load mp4 file</button>
+        <button class="btn btn-default btn-default" @click="loadVideoFile()">Load mp4 file</button>
         <span>file: {{localVideo}}</span>
       </div>
       <div v-if="videoConfig === 'internet'">
         <div class="form-group">
-          <input type="url" class="form-control" placeholder="Enter Youtube or Vimeo link">
+          <input type="url" class="form-control" placeholder="Enter Youtube or Vimeo link" v-model="videoUrl">
+           <button class="btn btn-default btn-primary" @click="formatSetupExternal(videoUrl)">Apply</button>
         </div>
       </div>
     </div>
@@ -48,6 +49,7 @@
   export default {
     data () {
       return {
+        videoUrl: '',
         videoConfig: 'local',
         localVideo: 'empty',
         BrowserWindow: remote.BrowserWindow.fromId(remote.getCurrentWindow().id)
@@ -69,6 +71,10 @@
       },
       hideWindow () {
         this.BrowserWindow.hide()
+      },
+      formatSetupExternal (url) {
+        let setup = `{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "${url}"}] }`
+        ipcRenderer.send('videoSrc', [setup, 'external'])
       }
     }
   }
