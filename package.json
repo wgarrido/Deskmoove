@@ -1,7 +1,7 @@
 {
   "name": "videodesk",
   "productName": "videodesk",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "William Garrido <will.bypass@gmail.com>",
   "description": "Video wallpaper for OSX",
   "license": null,
@@ -26,6 +26,7 @@
     "@types/video.js": "^6.2.2",
     "axios": "^0.16.1",
     "video.js": "^6.2.8",
+    "videojs-youtube": "^2.4.1",
     "vue": "^2.3.3",
     "vue-class-component": "^6.1.0",
     "vue-electron": "^1.0.6",
