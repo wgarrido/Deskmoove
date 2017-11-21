@@ -5,6 +5,9 @@
       <button class="btn btn-default active">
         <span class="icon icon-video"></span>
       </button>
+      <button class="btn btn-negative btn-mini pull-right" @click="quitApp()">
+          Quit app
+        </button>
   </div>
     </header>
   <div id="content">
@@ -32,15 +35,11 @@
   </div>
     <footer class="toolbar toolbar-footer">
       <div class="toolbar-actions">
-        <button class="btn btn-primary">
-          Ok
-        </button>
-        <button class="btn btn-default">
+        <button class="btn btn-default" @click="hideWindow()">
           Cancel
         </button>
-
-        <button class="btn btn-negative pull-right" @click="quitApp()">
-          Quit app
+        <button class="btn btn-primary pull-right">
+          Save
         </button>
       </div>
     </footer>
@@ -53,7 +52,8 @@
     data () {
       return {
         videoConfig: 'local',
-        localVideo: 'empty'
+        localVideo: 'empty',
+        BrowserWindow: remote.BrowserWindow.fromId(remote.getCurrentWindow().id)
       }
     },
     methods: {
@@ -69,6 +69,9 @@
       },
       quitApp () {
         remote.app.quit()
+      },
+      hideWindow () {
+        this.BrowserWindow.hide()
       }
     }
   }
@@ -77,10 +80,12 @@
 <style>
 @import "~@/assets/css/photon.min.css";
 body {
-  resize: none
+  resize: none;
 }
-
 #content {
-  padding: 15px
+  padding: 20px 15px;
+}
+.radio{
+  margin-top: 0px;
 }
 </style>
