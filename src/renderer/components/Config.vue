@@ -35,11 +35,8 @@
   </div>
     <footer class="toolbar toolbar-footer">
       <div class="toolbar-actions">
-        <button class="btn btn-default" @click="hideWindow()">
-          Cancel
-        </button>
-        <button class="btn btn-primary pull-right">
-          Save
+        <button class="btn btn-default pull-right" @click="hideWindow()">
+          Close
         </button>
       </div>
     </footer>
