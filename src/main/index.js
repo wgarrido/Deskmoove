@@ -65,6 +65,7 @@ app.on('ready', () => {
         }
       })
       paramWindow.loadURL(configURL)
+      paramWindow.setAlwaysOnTop(true)
     } else if (paramWindow.isVisible()) {
       paramWindow.hide()
     } else {
