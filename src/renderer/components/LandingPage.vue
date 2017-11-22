@@ -57,7 +57,7 @@
     z-index: 0;
   }
 
-  #my-player{
+  #vd-player{
     -webkit-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
