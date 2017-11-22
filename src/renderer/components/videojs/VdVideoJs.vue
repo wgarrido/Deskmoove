@@ -8,7 +8,9 @@
 </template>
 
 <script>
-// import VideoJs from 'video.js'
+import VideoJs from 'video.js'
+import 'video.js/dist/video-js.min.css'
+import 'videojs-youtube/dist/Youtube.min.js'
 export default {
   props: {
     srcVideo: String,
@@ -20,7 +22,7 @@ export default {
       player: null,
       optionsPlayer: {
         autoplay: true,
-        controls: false,
+        controls: true,
         loop: true,
         muted: true,
         preload: 'auto',
@@ -29,7 +31,7 @@ export default {
     }
   },
   mounted: function () {
-    // this.player = VideoJs('my-player', this.optionsPlayer)
+    this.player = VideoJs('my-player', this.optionsPlayer)
   },
   beforeDestroy: function () {
     this.player.dispose()

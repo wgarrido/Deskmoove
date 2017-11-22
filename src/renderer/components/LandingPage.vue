@@ -1,50 +1,39 @@
 <template>
   <div id="wrapper">
-    <main v-html="videoPlayer">
+    <main v-for="player in videoPlayer" :key="player.id">
+      <vd-video-js :context="player.context" :src-video="player.src" :data-setup="player.dataSetup"></vd-video-js>
     </main>
   </div>
 </template>
 
 <script>
   import Vue from 'vue'
-  import 'video.js/dist/video-js.min.css'
   import VideoJs from 'video.js'
-  import 'videojs-youtube/dist/Youtube.min.js'
   import { ipcRenderer } from 'electron'
+  import VdVideoJs from './videojs/VdVideoJS.vue'
 
   export default {
+    components: {VdVideoJs},
     data () {
       return {
-        player: null,
-        videoPlayer: `<video id="my-player" class="video-js" preload="auto" v-if="context === 'local'">
-                        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-                      </video>`,
-        context: 'local',
-        setup: '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }',
-        optionsPlayer: {
-          autoplay: true,
-          controls: false,
-          loop: true,
-          muted: true,
-          preload: 'auto',
-          fluid: true
-        }
+        videoPlayer: [{context: 'local', src: 'http://vjs.zencdn.net/v/oceans.mp4', id: 1}]
       }
     },
     mounted: function () {
-      this.player = VideoJs('my-player', this.optionsPlayer)
-
       // Listen Channel change-src on Main
       ipcRenderer.on('change-src', (event, arg) => {
         this.context = arg[1]
         if (this.context === 'local') {
-          this.player.dispose()
+          this.videoPlayer.splice(0, 1)
+          this.videoPlayer.push({context: 'local', src: `file://${arg[0]}`})
+          /* this.player.dispose()
           this.videoPlayer = `<video id="my-player" class="video-js" preload="auto" v-if="context === 'local'">
                                 <source src="file://${arg[0]}" type="video/mp4">
                               </video>`
           Vue.nextTick(() => {
             this.player = VideoJs('my-player', this.optionsPlayer)
-          })
+          }) */
+
           // this.loadSource(arg[0], arg[1])
         } else if (this.context === 'external') {
           this.player.dispose()
@@ -83,7 +72,7 @@
     overflow: hidden;
   }
 
-  main {
+  #container-player {
     position: relative;
     height: 100vh;
     z-index: 0;
