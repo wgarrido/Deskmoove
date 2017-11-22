@@ -7,8 +7,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VideoJs from 'video.js'
   import { ipcRenderer } from 'electron'
   import VdVideoJs from './videojs/VdVideoJS.vue'
 
@@ -25,36 +23,17 @@
         this.context = arg[1]
         if (this.context === 'local') {
           this.videoPlayer.splice(0, 1)
-          this.videoPlayer.push({context: 'local', src: `file://${arg[0]}`})
-          /* this.player.dispose()
-          this.videoPlayer = `<video id="my-player" class="video-js" preload="auto" v-if="context === 'local'">
-                                <source src="file://${arg[0]}" type="video/mp4">
-                              </video>`
-          Vue.nextTick(() => {
-            this.player = VideoJs('my-player', this.optionsPlayer)
-          }) */
-
-          // this.loadSource(arg[0], arg[1])
+          this.videoPlayer.push({context: this.context, src: `file://${arg[0]}`})
         } else if (this.context === 'external') {
-          this.player.dispose()
           this.setup = arg[0]
-          this.videoPlayer = `<video id="my-player" class="video-js" preload="auto" data-setup='${this.setup}'>
-                              </video>`
-          Vue.nextTick(() => {
-            this.player = VideoJs('my-player', this.optionsPlayer)
-          })
+          this.videoPlayer.splice(0, 1)
+          this.videoPlayer.push({context: this.context, dataSetup: this.setup})
         }
       })
     },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
-      },
-      // Load source in Video Player
-      loadSource (source, context) {
-        if (context === 'local') {
-          this.player.src('file://' + source)
-        }
       }
     }
   }
