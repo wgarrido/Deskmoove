@@ -1,7 +1,7 @@
 <template>
 <div id="container-player">
-  <video id="my-player" class="video-js" preload="auto" :data-setup="dataSetup" v-if="context === 'external'"></video>
-  <video id="my-player" class="video-js" preload="auto" v-if="context === 'local'">
+  <video id="vd-player" class="video-js" preload="auto" :data-setup="dataSetup" v-if="context === 'external'"></video>
+  <video id="vd-player" class="video-js" preload="auto" v-if="context === 'local'">
       <source :src="srcVideo" type="video/mp4">
   </video>
 </div>
@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted: function () {
-    this.player = VideoJs('my-player', this.optionsPlayer)
+    this.player = VideoJs('vd-player', this.optionsPlayer)
   },
   beforeDestroy: function () {
     this.player.dispose()
