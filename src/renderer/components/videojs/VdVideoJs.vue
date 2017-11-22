@@ -1,7 +1,7 @@
 <template>
 <div id="container-player">
-  <video id="my-player" class="video-js" preload="auto" :data-setup="dataSetup" v-show="context === 'external'"></video>
-  <video id="my-player" class="video-js" preload="auto" v-show="context === 'local'">
+  <video id="my-player" class="video-js" preload="auto" :data-setup="dataSetup" v-if="context === 'external'"></video>
+  <video id="my-player" class="video-js" preload="auto" v-if="context === 'local'">
       <source :src="srcVideo" type="video/mp4">
   </video>
 </div>
@@ -22,7 +22,7 @@ export default {
       player: null,
       optionsPlayer: {
         autoplay: true,
-        controls: true,
+        controls: false,
         loop: true,
         muted: true,
         preload: 'auto',
