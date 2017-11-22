@@ -24,12 +24,12 @@ function createWindow (width, height) {
     height,
     width,
     frame: true,
-    type: 'desktop',
+    type: 'normal',
     useContentSize: true,
     enableLargerThanScreen: true,
     webPreferences: {
       webSecurity: false,
-      devTools: false
+      devTools: true
     }
   })
 
