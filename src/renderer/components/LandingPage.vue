@@ -14,7 +14,7 @@
     components: {VdVideoJs},
     data () {
       return {
-        videoPlayer: [{context: 'local', src: 'http://vjs.zencdn.net/v/oceans.mp4', id: 1}]
+        videoPlayer: [{context: 'external', dataSetup: '{"techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=eYqIEBpbRhg"}] }', id: 1}]
       }
     },
     mounted: function () {
@@ -57,7 +57,7 @@
     z-index: 0;
   }
 
-  #my-player{
+  #vd-player{
     -webkit-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
